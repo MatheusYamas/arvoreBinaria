@@ -25,8 +25,11 @@ public class ArvoreBinaria {
         if(informacao < no.getInformacao()){
             no.setEsquerda(recursaoInserir(no.getEsquerda(), informacao));
         }
-        else{
+        else if (informacao > no.getInformacao()){
             no.setDireita(recursaoInserir(no.getDireita(), informacao));
+        }
+        else{
+            System.out.println("Valor já inserido: " + informacao);
         }
         return no;
     }
@@ -73,6 +76,30 @@ public class ArvoreBinaria {
         recursaoPos(this.raiz);
     }
 
+    public Node recursaoRemoverValor(Node no, int informacao){
+
+        if (informacao == no.getInformacao()){
+            if (no.getEsquerda() == null){
+                return no.getDireita();
+            }
+            if (no.getDireita() == null){
+                return no.getEsquerda();
+            }
+        }
+
+        if(informacao < no.getInformacao()){
+            no.setEsquerda(recursaoRemoverValor(no.getEsquerda(), informacao));
+        }
+        else if (informacao > no.getInformacao()){
+            no.setDireita(recursaoRemoverValor(no.getDireita(), informacao));
+        }
+        return no;
+    }
+    public void removerValor(int informacao){
+        System.out.println("\n\nRemovendo o valor escolhido da arvore: " + informacao);
+        recursaoRemoverValor(this.raiz, informacao);
+    }
+
     // As 2 funções abaixo são para a remocão do menor nó
     public Node recursaoRemoverMenor(Node no){
         if (no.getEsquerda() == null){
@@ -82,9 +109,24 @@ public class ArvoreBinaria {
         return no;
     }
     public void removerMenor(){
-        System.out.println("Removendo o menor nó");
-        recursaoRemoverMenor(this.raiz);
+        System.out.println("\n\nRemovendo o menor nó");
+        this.raiz = recursaoRemoverMenor(this.raiz);
     }
+
+    // As 2 funções abaixo são para a remocão do maior nó
+    public Node recursaoRemoverMaior(Node no){
+        if (no.getDireita() == null){
+            return no.getEsquerda();
+        }
+        no.setDireita(recursaoRemoverMaior(no.getDireita()));
+        return no;
+    }
+    public void removerMaior(){
+        System.out.println("\n\nRemovendo o maior nó");
+        this.raiz = recursaoRemoverMaior(this.raiz);
+    }
+
+
 
     public boolean vazia(Node no){
         return no == null;
@@ -107,13 +149,15 @@ public class ArvoreBinaria {
             System.out.println("Inserindo o valor: " + numero);
             arvore.inserir(numero);
         }
-        System.out.println("Percurso Pré-Ordem (Esperado: 14 4 3 9 7 5 15 18 16 17 20)");
-        System.out.println("Percurso Em-Ordem (Esperado: 3 4 5 7 9 14 15 16 17 18 20)");
-        System.out.println("Percurso Pós-Ordem (Esperado: 3 5 7 9 4 17 16 20 18 15 14)");
+        System.out.println("\nPercurso Pré-Ordem (Esperado: 14 4 3 9 7 5 15 18 16 17 20)");
         arvore.preOrdem();
+        System.out.println("\n\nPercurso Em-Ordem (Esperado: 3 4 5 7 9 14 15 16 17 18 20)");
         arvore.inOrdem();
+        System.out.println("\n\nPercurso Pós-Ordem (Esperado: 3 5 7 9 4 17 16 20 18 15 14)");
         arvore.posOrdem();
         arvore.removerMenor();
-
+        arvore.inOrdem();
+        arvore.removerMaior();
+        arvore.inOrdem();
     }
 }
