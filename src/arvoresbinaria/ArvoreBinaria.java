@@ -1,13 +1,11 @@
 package arvoresbinaria;
 
-import java.util.Scanner;
-
 public class ArvoreBinaria {
     private Node raiz;
-
     public ArvoreBinaria(){
         this.raiz = null;
     }
+
     // As 2 funções abaixo são para inserir
     public void inserir(int informacao){
         if (vazia(this.raiz)){
@@ -17,7 +15,7 @@ public class ArvoreBinaria {
             this.raiz = recursaoInserir(this.raiz, informacao);
         }
     }
-    public Node recursaoInserir(Node no, int informacao){
+    private Node recursaoInserir(Node no, int informacao){
         if(vazia(no)){
             return new Node(informacao);
         }
@@ -35,7 +33,7 @@ public class ArvoreBinaria {
     }
 
     //As 2 funções abaixo são para Percorrer o Pré-ordem
-    public void recursaoPre(Node no){
+    private void recursaoPre(Node no){
         if(vazia(no)){
             return;
         }
@@ -49,7 +47,7 @@ public class ArvoreBinaria {
     }
 
     // As 2 funções abaixos são para Percorrer o In-ordem
-    public void recursaoIn(Node no){
+    private void recursaoIn(Node no){
         if (vazia(no)){
             return;
         }
@@ -63,7 +61,7 @@ public class ArvoreBinaria {
     }
 
     // As 2 funções abaixos são para Percorrer o Pos-ordem
-    public void recursaoPos(Node no){
+    private void recursaoPos(Node no){
         if (vazia(no)){
             return;
         }
@@ -76,7 +74,12 @@ public class ArvoreBinaria {
         recursaoPos(this.raiz);
     }
 
-    public Node recursaoRemoverValor(Node no, int informacao){
+    //As 2 funções abaixo são para remover um nó pelo valor do nó
+    public void removerValor(int informacao){
+        System.out.println("\nRemovendo o valor escolhido da arvore: " + informacao);
+        this.raiz = recursaoRemoverValor(this.raiz, informacao);
+    }
+    private Node recursaoRemoverValor(Node no, int informacao){
         if (vazia(no)){
             return null;
         }
@@ -102,22 +105,9 @@ public class ArvoreBinaria {
         }
         return no;
     }
-    public void removerValor(int informacao){
-        System.out.println("\n\nRemovendo o valor escolhido da arvore: " + informacao);
-        recursaoRemoverValor(this.raiz, informacao);
-    }
-    public Node encontrarMenorValor(Node no){
-        if (vazia(no)){
-            return null;
-        }
-        if (vazia(no.getEsquerda())){
-            return no;
-        }
-        return encontrarMenorValor(no.getEsquerda());
-    }
 
     // As 2 funções abaixo são para a remocão do menor nó
-    public Node recursaoRemoverMenor(Node no){
+    private Node recursaoRemoverMenor(Node no){
         if (vazia(no.getEsquerda())){
             return no.getDireita();
         }
@@ -130,7 +120,7 @@ public class ArvoreBinaria {
     }
 
     // As 2 funções abaixo são para a remocão do maior nó
-    public Node recursaoRemoverMaior(Node no){
+    private Node recursaoRemoverMaior(Node no){
         if (vazia(no.getDireita())){
             return no.getEsquerda();
         }
@@ -142,38 +132,19 @@ public class ArvoreBinaria {
         this.raiz = recursaoRemoverMaior(this.raiz);
     }
 
-    public boolean vazia(Node no){
+    //Função para ver se o nó é nulo
+    private boolean vazia(Node no){
         return no == null;
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ArvoreBinaria arvore = new ArvoreBinaria();
-        System.out.println("Insira valores na arvore: ");
-//        int item;
-//        while (true) {
-//            item = scanner.nextInt();
-//            if (item == 0) {
-//                break;
-//            }
-//            arvore.inserir(item);
-//        }
-        int[] numerosParaTeste = {14, 15, 4, 9, 7, 18, 3, 5, 16, 20, 17, 9, 5};
-        for (int numero : numerosParaTeste) {
-            System.out.println("Inserindo o valor: " + numero);
-            arvore.inserir(numero);
+    //Função para encontrar o menor valor
+    private Node encontrarMenorValor(Node no){
+        if (vazia(no)){
+            return null;
         }
-        System.out.println("\nPercurso Pré-Ordem (Esperado: 14 4 3 9 7 5 15 18 16 17 20)");
-        arvore.preOrdem();
-        System.out.println("\n\nPercurso Em-Ordem (Esperado: 3 4 5 7 9 14 15 16 17 18 20)");
-        arvore.inOrdem();
-        System.out.println("\n\nPercurso Pós-Ordem (Esperado: 3 5 7 9 4 17 16 20 18 15 14)");
-        arvore.posOrdem();
-        arvore.removerMenor();
-        arvore.inOrdem();
-        arvore.removerMaior();
-        arvore.inOrdem();
-        arvore.removerValor(16);
-        arvore.inOrdem();
+        if (vazia(no.getEsquerda())){
+            return no;
+        }
+        return encontrarMenorValor(no.getEsquerda());
     }
 }
