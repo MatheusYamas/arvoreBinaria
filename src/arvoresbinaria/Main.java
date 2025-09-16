@@ -34,5 +34,6 @@ public class Main {
         valor = scanner.nextInt();
         arvore.removerValor(valor);
         arvore.inOrdem();
+        System.out.println("\n\nAlunos: Mateus Roese Tocunduva, Matheus Yamamoto Dias, Victor Ryuki Tamezava.");
     }
 }
