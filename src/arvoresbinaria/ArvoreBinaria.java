@@ -114,5 +114,6 @@ public class ArvoreBinaria {
         arvore.inOrdem();
         arvore.posOrdem();
         arvore.removerMenor();
+
     }
 }

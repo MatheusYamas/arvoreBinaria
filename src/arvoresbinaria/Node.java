@@ -1,5 +1,4 @@
 package arvoresbinaria;
-
 public class Node {
     private Integer informacao;
     private Node esquerda;
